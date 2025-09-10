@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FREE WORLD POPULAR MOVIES</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #fff;
+            min-height: 100vh;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            font-size: 2.2rem;
+            background: linear-gradient(45deg, #ff8a00, #e52e71);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-left: 10px;
+        }
+        
+        .logo i {
+            font-size: 2.5rem;
+            color: #e52e71;
+        }
+        
+        .search-container {
+            width: 100%;
+            margin: 30px 0;
+            position: relative;
+        }
+        
+        .search-box {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            outline: none;
+            padding-left: 50px;
+            transition: all 0.3s ease;
+        }
+        
+        .search-box:focus {
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 15px rgba(229, 46, 113, 0.5);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 15px;
+            color: #ccc;
+        }
+        
+        .filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background: linear-gradient(45deg, #ff8a00, #e52e71);
+        }
+        
+        .movies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .movie-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        
+        .movie-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .movie-poster {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+        
+        .movie-info {
+            padding: 20px;
+        }
+        
+        .movie-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .movie-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #ccc;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .rating {
+            color: #ff8a00;
+        }
+        
+        .movie-description {
+            color: #aaa;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .watch-free {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(45deg, #ff8a00, #e52e71);
+            color: white;
+            text-align: center;
+            border: none;
+            border-radius: 5px;
+            margin-top: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: opacity 0.3s ease;
+        }
+        
+        .watch-free:hover {
+            opacity: 0.9;
+        }
+        
+        .free-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #4caf50;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: #ccc;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .movies-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+            
+            header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo {
+                margin-bottom: 20px;
+                justify-content: center;
+            }
+        }
+        
+        .featured-section {
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(45deg, #ff8a00, #e52e71);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-film"></i>
+                <h1>FREE WORLD POPULAR MOVIES</h1>
+            </div>
+        </header>
+        
+        <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" class="search-box" placeholder="Search for free movies...">
+        </div>
+        
+        <div class="filters">
+            <button class="filter-btn active">All</button>
+            <button class="filter-btn">Action</button>
+            <button class="filter-btn">Comedy</button>
+            <button class="filter-btn">Drama</button>
+            <button class="filter-btn">Horror</button>
+            <button class="filter-btn">Sci-Fi</button>
+            <button class="filter-btn">Free Now</button>
+        </div>
+        
+        <div class="featured-section">
+            <h2 class="section-title">Popular Free Movies</h2>
+            <div class="movies-grid">
+                <!-- Movie 1 -->
+                <div class="movie-card">
+                    <span class="free-badge">FREE</span>
+                    <img src="https://image.tmdb.org/t/p/w500/6FfCtAuVAW8XJjZ7eWeLibRLWT.jpg" alt="Movie Poster" class="movie-poster">
+                    <div class="movie-info">
+                        <h3 class="movie-title">Psycho</h3>
+                        <div class="movie-meta">
+                            <span class="year">1960</span>
+                            <span class="rating"><i class="fas fa-star"></i> 8.5</span>
+                        </div>
+                        <p class="movie-description">A Phoenix secretary embezzles $40,000 from her employer's client, goes on the run, and checks into a remote motel run by a young man under the domination of his mother.</p>
+                        <button class="watch-free">Watch Free</button>
+                    </div>
+                </div>
+                
+                <!-- Movie 2 -->
+                <div class="movie-card">
+                    <span class="free-badge">FREE</span>
+                    <img src="https://image.tmdb.org/t/p/w500/AgWWC1g9NoPc06F9MwN3iv2TqSd.jpg" alt="Movie Poster" class="movie-poster">
+                    <div class="movie-info">
+                        <h3 class="movie-title">Roman Holiday</h3>
+                        <div class="movie-meta">
+                            <span class="year">1953</span>
+                            <span class="rating"><i class="fas fa-star"></i> 8.0</span>
+                        </div>
+                        <p class="movie-description">A European princess tires of her royal duties and escapes to explore Rome on her own. She meets an American journalist who shows her the city while secretly planning to write an exclusive story about her.</p>
+                        <button class="watch-free">Watch Free</button>
+                    </div>
+                </div>
+                
+                <!-- Movie 3 -->
+                <div class="movie-card">
+                    <span class="free-badge">FREE</span>
+                    <img src="https://image.tmdb.org/t/p/w500/7w06baRSf5q6HcSL2QvjStMtrej.jpg" alt="Movie Poster" class="movie-poster">
+                    <div class="movie-info">
+                        <h3 class="movie-title">The Truman Show</h3>
+                        <div class="movie-meta">
+                            <span class="year">1998</span>
+                            <span class="rating"><i class="fas fa-star"></i> 8.2</span>
+                        </div>
+                        <p class="movie-description">An insurance salesman discovers his entire life is actually a reality TV show and he must decide whether to accept this reality or break free from its constraints.</p>
+                        <button class="watch-free">Watch Free</button>
+                    </div>
+                </div>
+                
+                <!-- Movie 4 -->
+                <div class="movie-card">
+                    <span class="free-badge">FREE</span>
+                    <img src="https://image.tmdb.org/t/p/w500/6FfCtAuVAW8XJjZ7eWeLibRLWT.jpg" alt="Movie Poster" class="movie-poster">
+                    <div class="movie-info">
+                        <h3 class="movie-title">Fantastic Mr. Fox</h3>
+                        <div class="movie-meta">
+                            <span class="year">2009</span>
+                            <span class="rating"><i class="fas fa-star"></i> 7.9</span>
+                        </div>
+                        <p class="movie-description">An urbane fox cannot resist returning to his farm raiding ways and then must help his community survive the farmers' retaliation.</p>
+                        <button class="watch-free">Watch Free</button>
+                    </div>
+                </div>
+                
+                <!-- Movie 5 -->
+                <div class="movie-card">
+                    <span class="free-badge">FREE</span>
+                    <img src="https://image.tmdb.org/t/p/w500/9xjZS2rlVxm8SFx8kPC3aIGCOYQ.jpg" alt="Movie Poster" class="movie-poster">
+                    <div class="movie-info">
+                        <h3 class="movie-title">Stand by Me</h3>
+                        <div class="movie-meta">
+                            <span class="year">1986</span>
+                            <span class="rating"><i class="fas fa-star"></i> 8.1</span>
+                        </div>
+                        <p class="movie-description">After the death of a friend, a writer recounts a childhood journey with his friends to find the body of a missing boy.</p>
+                        <button class="watch-free">Watch Free</button>
+                    </div>
+                </div>
+                
+                <!-- Movie 6 -->
+                <div class="movie-card">
+                    <span class="free-badge">FREE</span>
+                    <img src="https://image.tmdb.org/t/p/w500/9Baumh5J9N1n9Y2x3Yy5p2z5aZ.jpg" alt="Movie Poster" class="movie-poster">
+                    <div class="movie-info">
+                        <h3 class="movie-title">Titanic</h3>
+                        <div class="movie-meta">
+                            <span class="year">1997</span>
+                            <span class="rating"><i class="fas fa-star"></i> 7.9</span>
+                        </div>
+                        <p class="movie-description">A seventeen-year-old aristocrat falls in love with a kind but poor artist aboard the luxurious, ill-fated R.M.S. Titanic.</p>
+                        <button class="watch-free">Watch Free</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="featured-section">
+            <h2 class="section-title">Recently Added Free Movies</h2>
+            <div class="movies-grid">
+                <!-- Recent Movie 1 -->
+                <div class="movie-card">
+                    <span class="free-badge">FREE</span>
+                    <img src="https://image.tmdb.org/t/p/w500/v28V5mqzMPeqojsEfdBzG6LlgY5.jpg" alt="Movie Poster" class="movie-poster">
+                    <div class="movie-info">
+                        <h3 class="movie-title">Dirty Rotten Scoundrels</h3>
+                        <div class="movie-meta">
+                            <span class="year">1988</span>
+                            <span class="rating"><i class="fas fa-star"></i> 7.0</span>
+                        </div>
+                        <p class="movie-description">Two con men try to settle their rivalry by betting on who can be the first to swindle a young American heiress out of $50,000.</p>
+                        <button class="watch-free">Watch Free</button>
+                    </div>
+                </div>
+                
+                <!-- Recent Movie 2 -->
+                <div class="movie-card">
+                    <span class="free-badge">FREE</span>
+                    <img src="https://image.tmdb.org/t/p/w500/6aXMus1kIk0lnN6NMgPxq6eH5aO.jpg" alt="Movie Poster" class="movie-poster">
+                    <div class="movie-info">
+                        <h3 class="movie-title">The Peanut Butter Falcon</h3>
+                        <div class="movie-meta">
+                            <span class="year">2019</span>
+                            <span class="rating"><i class="fas fa-star"></i> 7.6</span>
+                        </div>
+                        <p class="movie-description">Zak runs away from his care home to make his dream of becoming a wrestler come true.</p>
+                        <button class="watch-free">Watch Free</button>
+                    </div>
+                </div>
+                
+                <!-- Recent Movie 3 -->
+                <div class="movie-card">
+                    <span class="free-badge">FREE</span>
+                    <img src="https://image.tmdb.org/t/p/w500/b4xhlmGleNhfUek7RGp3vRal2n4.jpg" alt="Movie Poster" class="movie-poster">
+                    <div class="movie-info">
+                        <h3 class="movie-title">Mr. and Mrs. Smith</h3>
+                        <div class="movie-meta">
+                            <span class="year">2005</span>
+                            <span class="rating"><i class="fas fa-star"></i> 6.5</span>
+                        </div>
+                        <p class="movie-description">A bored married couple is surprised to learn that they are both assassins hired by competing agencies to kill each other.</p>
+                        <button class="watch-free">Watch Free</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>FREE WORLD POPULAR MOVIES &copy; 2025 - Discover and watch free movies online</p>
+            <p>This site provides links to free movies available on various platforms including YouTube, Tubi, and other free streaming services :cite[2]:cite[5].</p>
+        </footer>
+    </div>
+
+    <script>
+        // Basic search functionality
+        const searchBox = document.querySelector('.search-box');
+        const movieCards = document.querySelectorAll('.movie-card');
+        
+        searchBox.addEventListener('keyup', function() {
+            const searchText = this.value.toLowerCase();
+            
+            movieCards.forEach(card => {
+                const title = card.querySelector('.movie-title').textContent.toLowerCase();
+                const description = card.querySelector('.movie-description').textContent.toLowerCase();
+                
+                if (title.includes(searchText) || description.includes(searchText)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+        
+        // Filter buttons
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                // Here you would typically filter movies by category
+                // This is just a placeholder implementation
+                const filterValue = this.textContent.toLowerCase();
+                
+                if (filterValue === 'all') {
+                    movieCards.forEach(card => {
+                        card.style.display = 'block';
+                    });
+                } else {
+                    // In a real implementation, you would filter by category
+                    // For now, we'll just show all movies
+                    movieCards.forEach(card => {
+                        card.style.display = 'block';
+                    });
+                    
+                    // Show message about filter (would be replaced with actual filtering)
+                    alert(`Filtering by ${filterValue} would be implemented here`);
+                }
+            });
+        });
+        
+        // Watch Free button functionality
+        const watchFreeButtons = document.querySelectorAll('.watch-free');
+        
+        watchFreeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const movieTitle = this.parentElement.querySelector('.movie-title').textContent;
+                alert(`In a full implementation, this would redirect to the free streaming page for "${movieTitle}" on platforms like YouTube, Tubi, or other free services :cite[2]:cite[5].`);
+            });
+        });
+    </script>
+</body>
+</html>
