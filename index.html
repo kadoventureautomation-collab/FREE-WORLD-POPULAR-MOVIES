@@ -54,6 +54,22 @@
             color: #e52e71;
         }
         
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: #ff8a00;
+        }
+        
         .search-container {
             width: 100%;
             margin: 30px 0;
@@ -104,6 +120,56 @@
         
         .filter-btn:hover, .filter-btn.active {
             background: linear-gradient(45deg, #ff8a00, #e52e71);
+        }
+        
+        .featured-video {
+            width: 100%;
+            margin-bottom: 40px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            background: #000;
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .video-info {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .video-title {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .video-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #ccc;
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+        
+        .video-description {
+            color: #aaa;
+            font-size: 1rem;
+            line-height: 1.6;
         }
         
         .movies-grid {
@@ -218,6 +284,15 @@
                 margin-bottom: 20px;
                 justify-content: center;
             }
+            
+            .nav-links {
+                margin-top: 20px;
+                justify-content: center;
+            }
+            
+            .video-title {
+                font-size: 1.4rem;
+            }
         }
         
         .featured-section {
@@ -249,6 +324,12 @@
                 <i class="fas fa-film"></i>
                 <h1>FREE WORLD POPULAR MOVIES</h1>
             </div>
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="#">Movies</a>
+                <a href="#">TV Shows</a>
+                <a href="#">Free Content</a>
+            </div>
         </header>
         
         <div class="search-container">
@@ -264,6 +345,28 @@
             <button class="filter-btn">Horror</button>
             <button class="filter-btn">Sci-Fi</button>
             <button class="filter-btn">Free Now</button>
+        </div>
+        
+        <!-- Featured Video Section -->
+        <div class="featured-video">
+            <div class="video-container">
+                <iframe src="https://fmoviesunblocked.net/spa/videoPlayPage/movies/kpop-demon-hunters-aHJ0ChGCdI5?id=4795103281850766056&type=/movie/detail" 
+                        frameborder="0" 
+                        allowfullscreen 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+                </iframe>
+            </div>
+            <div class="video-info">
+                <h2 class="video-title">K-Pop Demon Hunters</h2>
+                <div class="video-meta">
+                    <span class="year">2022</span>
+                    <span class="rating"><i class="fas fa-star"></i> 7.2/10</span>
+                </div>
+                <p class="video-description">
+                    In a world where K-Pop stars are secretly demon hunters, a new girl group must balance their rising fame with their dangerous nighttime activities. 
+                    When a powerful demon threatens to disrupt their world tour, they must use both their musical talents and combat skills to save humanity.
+                </p>
+            </div>
         </div>
         
         <div class="featured-section">
@@ -413,7 +516,7 @@
         
         <footer>
             <p>FREE WORLD POPULAR MOVIES &copy; 2025 - Discover and watch free movies online</p>
-            <p>This site provides links to free movies available on various platforms including YouTube, Tubi, and other free streaming services :cite[2]:cite[5].</p>
+            <p>This site provides links to free movies available on various platforms including YouTube, Tubi, and other free streaming services.</p>
         </footer>
     </div>
 
@@ -475,7 +578,7 @@
         watchFreeButtons.forEach(button => {
             button.addEventListener('click', function() {
                 const movieTitle = this.parentElement.querySelector('.movie-title').textContent;
-                alert(`In a full implementation, this would redirect to the free streaming page for "${movieTitle}" on platforms like YouTube, Tubi, or other free services :cite[2]:cite[5].`);
+                alert(`In a full implementation, this would redirect to the free streaming page for "${movieTitle}" on platforms like YouTube, Tubi, or other free services.`);
             });
         });
     </script>
